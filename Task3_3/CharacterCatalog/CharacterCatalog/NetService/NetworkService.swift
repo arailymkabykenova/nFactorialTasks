@@ -8,7 +8,9 @@ import Foundation
 
 class NetworkService {
     private let BASE_URL="https://rickandmortyapi.com/api"
+    
     private let decoder=JSONDecoder()
+    
     func get<Response:Decodable>(relativePath:String)async throws->Response {
         guard
             let url=URL(string: BASE_URL+relativePath)
@@ -21,6 +23,7 @@ class NetworkService {
         
         //let (data,_)=try await URLSession.shared.data(for: request)
         let(data,_)=try await URLSession.shared.data(from: url)
+        
         let response=try decoder.decode(Response.self,from:data)
         //let response=try JSONDecoder().decode(Response.self, from: data)
         return response

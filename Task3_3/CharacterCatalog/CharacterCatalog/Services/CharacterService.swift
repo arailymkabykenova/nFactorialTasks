@@ -9,7 +9,9 @@ class CharacterService{
     private let netService=NetworkService()
     
     func get() async throws -> [Characters] {
+        
         let response:APIResponse<Characters> = try await netService.get(relativePath: "/character")
+        
         return response.results
     }
 }

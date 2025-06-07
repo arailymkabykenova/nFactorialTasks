@@ -9,10 +9,11 @@ import SwiftUI
 
 struct CharactersView: View {
     @StateObject var viewModel = CharactersViewModel()
-
+    
     var body: some View {
         NavigationStack {
             VStack{
+                
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let errorDescription = viewModel.errorDescription {
@@ -20,30 +21,36 @@ struct CharactersView: View {
                 } else if viewModel.characters.isEmpty {
                     Text("Character is Empty")
                 } else {
+                    
                     List(viewModel.characters) { character in
                         
                         if character.id % 2 == 0 {
+                            
                             HStack(alignment: .top, spacing: 16) {
-                             ImageView(imageURL: character.image)
+                                
+                                ImageView(imageURL: character.image)
+                                
                                 Spacer()
                                     .frame(width:20)
-                             DescriptionView(character: character)
                                 
-                            
+                                DescriptionView(character: character)
                             }
                             .listRowSeparator(.hidden)
                             
                         } else {
+                            
                             HStack(alignment: .center, spacing: 16) {
                                 DescriptionView(character: character)
+                                
                                 Spacer()
                                     .frame(width:20)
+                                
                                 ImageView(imageURL: character.image)
                             }
                             .listRowSeparator(.hidden)
                             
                         }
-                       
+                        
                     }
                     .listStyle(.plain)
                     
@@ -53,12 +60,13 @@ struct CharactersView: View {
             }
             .navigationTitle("Characters")
             .background(.accent)
+            
             Text("Wubba Lubba Dub Dub!")
                 .font(.callout)
                 .fontWeight(.bold)
-            .task {
-                await viewModel.fetchCharacters()
-            }
+                .task {
+                    await viewModel.fetchCharacters()
+                }
         }
     }
 }
